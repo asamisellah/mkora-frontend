@@ -4,7 +4,7 @@ import Survey from './pages/survey'
 
 export default function Home() {
   return (
-    <div className='flex min-h-screen flex-col justify-between p-24'>
+    <div className='flex min-h-screen flex-col justify-between align-top p-24'>
       <header>
         <Header></Header>
       </header>
