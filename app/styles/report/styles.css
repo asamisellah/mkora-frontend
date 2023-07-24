@@ -1,0 +1,38 @@
+.report {
+  background-color: #000 !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 90vh;
+  grid-template-areas:
+    "nav nav"
+    "header main";
+
+}
+
+@media (max-width: 600px) {
+  .report {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "nav"
+      "header"
+      "main";
+  }
+}
+
+.nav-area {
+  grid-area: nav;
+
+}
+
+.header {
+  grid-area: header;
+  place-self: center;
+}
+
+.main {
+  grid-area: main;
+  place-self: center;
+  width: 100%;
+
+}
