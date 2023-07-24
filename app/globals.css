@@ -3,12 +3,27 @@
 @tailwind utilities;
 
 body {
-    margin: 3rem 5rem;
+    margin: 0 3.125rem;
+    background-color: #000;
 }
 
-.logo-header{
-  font-size: 2.5rem;
+@layer components{
+  .input{
+    @apply text-darkgray bg-lightgray rounded-xl md:w-9/12
+  }
+
+  .label{
+    @apply text-xl text-lightgray font-light tracking-wide mb-2
+  }
+
+  .field{
+    @apply flex flex-col my-4 text-xl
+  }
 }
+
+/* .logo-header{
+  font-size: 2.5rem;
+} 
 
 .header{
   margin: 2rem 0;
@@ -38,4 +53,4 @@ body {
   padding: 0.5rem 2rem;
   background-color: #1399fc;
   color: #fff;
-}
+}*/
