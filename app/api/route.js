@@ -18,7 +18,7 @@ export const getOptions = async () => {
 }
 
 export const postReport = async (payload) => {
-  return await axios.post('https://mkora-service.azurewebsites.net/api/v1/report2', JSON.stringify(payload), {
+  return await axios.post('https://mkora-service.azurewebsites.net/api/v1/report', JSON.stringify(payload), {
     headers: {
       "Content-Type": "application/json"
     }

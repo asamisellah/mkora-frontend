@@ -29,6 +29,7 @@ const ReportLayout = ({ children }) => {
       </article>
 
       <article className="main">
+        
         { children }
       </article>
     </div>
