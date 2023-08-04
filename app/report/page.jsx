@@ -5,62 +5,42 @@ import { useEffect, useState } from "react"
 import { useForm, ErrorMessage } from "react-hook-form"
 import Input from "../components/input"
 import Select from "../components/select"
-import { fields, options } from "../constants"
-// import { getOptions } from "../api/route"
+import { fields } from "../constants"
+import { getOptions, postReport } from "../api/route"
+import { useRouter } from "next/navigation"
 
 
 const Report = () => {
-  // const [options, setOptions] = useState({})
+  const [options, setOptions] = useState({})
+  const router = useRouter()
 
-  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitted }, } = useForm(
-    {
-      defaultValues: {
-        amount: ""
-      }
-    })
-  const language = "swahili"
+  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitted }, } = useForm()
 
-  // On submit:
-  // Check for valid state/errors (Validations if field is missing)
-  // Submit data
-  // Handle is submitting state
-  // Handle is submitted state i.e. both error and success
+  useEffect(() => {
+    const fetchOptions = async () => {
+      const options = await getOptions()
+      console.log("Options", options)
+      setOptions(options)
+    }
+    fetchOptions()
+  }, [])
 
-  // useEffect(() => {
-  // await fetch(`http://localhost:9080/api/v1/options`, {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   }
-  //    const fetchOptions = async() => {
-  //     const result = await getOptions()
-  //     if (!ignore) {
-  //       console.log(result)
-  //       setOptions(result)
-  //     }
-  //   }
 
-  //   let ignore = false;
 
-  //   fetchOptions()
+
+  const onSubmit = async (data) => {    
+    const response = await postReport(data)
+    switch (response) {
+      case 'Success':
+        router.push('/analytics')
+        break
+      default:
+        break
       
-  //   return () => {
-  //     ignore = true;
-  //   };
-  // }, []) 
-
-  
-  
-
-  const onSubmit = (data) => {
-    console.log(data)
+    }
   }
 
-  // console.log('Errors', errors)
-
-  // console.log('IsDirty', isDirty, 'dirtyFields', dirtyFields)
-
-  
-
+  const onError = () => {}
 
   const renderInputs = () => {
     return fields.map((field, index) => {
@@ -70,36 +50,30 @@ const Report = () => {
           // Get the options based on the name
           const {optionName, optionKeys = {name: "name", value: "value"}} = field.optionsKey
           return (
-            <>
-              <Select
-                key={field.name}
-                {...field}
-                register={register}
-                label={field.label[language]}
-                name={field.name}
-                options={options[optionName]}
-                optionKeys={optionKeys}
-                errors={errors[field.name]}
-                validators={field.validators[language]}
-              >
-              </Select>
-          </>
+            <Select
+              key={index+field.name}
+              {...field}
+              register={register}
+              label={field.label[language]}
+              name={field.name}
+              options={options[optionName]}
+              optionKeys={optionKeys}
+              errors={errors[field.name]}
+              validators={field.validators[language]}
+            ></Select>
           )
       
         default:
           return (
-            <>
-              <Input
-                key={field.name}
-                {...field}
-                register={register}
-                label = {field.label[language]}
-                name={field.name}
-                errors={errors[field.name]}
-                validators={field.validators[language]}
-              ></Input>
-              
-            </>
+            <Input
+              key={index+field.name}
+              {...field}
+              register={register}
+              label = {field.label[language]}
+              name={field.name}
+              errors={errors[field.name]}
+              validators={field.validators[language]}
+            ></Input>
           )
       }
     }) 
@@ -107,22 +81,16 @@ const Report = () => {
   
   return (
     <>
-      {isSubmitted ? (
-        <div className="text-lightgray font-semibold text-xl text-center flex flex-col">
-          <p className="mb-4"> Successfully submitted. Thank you for your contribution! </p>
-          <Link className="text-primary mb-2 hover:text-opacity-75" href="/analytics">View statistics</Link>
-          <Link className="text-primary hover:text-opacity-75" href="/">Back</Link>
-        </div>
-      ) : (
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-          {renderInputs()}
-          <input
-            className="submit-btn"
-            disabled={isSubmitting}
-            type="submit" />
-        </form>
-        )
-      }
+      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, onError)}>
+        {renderInputs()}
+        {isSubmitting ? (<div className="submit-btn">sending...</div>)
+          : (
+            <input
+              className="submit-btn"
+              value="Report"
+              type="submit" />
+          )}
+      </form>
     </>
   )
 }

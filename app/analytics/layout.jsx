@@ -1,4 +1,6 @@
 import Navbar from "../components/navbar";
 import { navLinks } from "../constants";
 
-export default () => (<Navbar navLinks={navLinks}></Navbar>)
+const AnalyticsLayout = () => (<Navbar navLinks={navLinks}></Navbar>)
+
+export default AnalyticsLayout

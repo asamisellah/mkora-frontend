@@ -21,7 +21,7 @@ body {
   }
 
   .submit-btn{
-    @apply transition ease-in-out delay-75 bg-primary text-lightgray font-semibold md:w-4/12 py-2.5 px-8 
+    @apply transition ease-in-out delay-75 bg-primary text-lightgray font-bold md:w-4/12 py-2.5 px-8 
     mt-5 rounded-xl disabled:bg-darkgray hover:bg-opacity-75 hover:duration-300
   }
 }
