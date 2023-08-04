@@ -16,12 +16,12 @@ export default function Navbar({ navLinks, children }) {
   }
 
   const getMobileMenu = () => {
-    navLinks.map(link => (
+    navLinks.map((link, index) => (
       <li key={link.name}>
         <Link
           className={`text-4xl ml-4 p-4 text-secondary  ${isActive(link) ? "underline underline-offset-8 decoration-primary font-medium": "font-normal"}`}
           href={link.href}
-          key={link.name}>
+          key={index+link.name}>
           {link.name}
         </Link>
       </li>
