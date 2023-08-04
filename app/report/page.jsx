@@ -7,18 +7,32 @@ import Input from "../components/input"
 import Select from "../components/select"
 import { fields, options } from "../constants"
 // import { getOptions } from "../api/route"
+import useSWR from 'swr'
+import { getOptions } from "../api/route"
 
 
 const Report = () => {
   // const [options, setOptions] = useState({})
+  const {data, error} = useSWR('https://mkora-service.azurewebsites.net/api/v1/options', getOptions)
 
-  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitted }, } = useForm(
-    {
-      defaultValues: {
-        amount: ""
-      }
-    })
+  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitted }, } = useForm()
   const language = "swahili"
+
+
+  console.log("Options data", data)
+
+  // useEffect(() => {
+  //   const getOptions = async () => {
+  //     const response = await fetch("https://mkora-service.azurewebsites.net/api/v1/options", {
+  //       headers: {
+  //           "Referrer-Policy": "Access-Control-Allow-Origin"
+  //       }
+  //     })
+  //     const options = await response.json()
+  //     console.log("Options***********", options)
+  //   }
+  //   getOptions()   
+  // }, [])
 
   // On submit:
   // Check for valid state/errors (Validations if field is missing)
@@ -52,15 +66,14 @@ const Report = () => {
   
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log("*********", JSON.stringify(data))
+    console.log("@@@@@@@@@2", isSubmitted)
   }
 
-  // console.log('Errors', errors)
-
-  // console.log('IsDirty', isDirty, 'dirtyFields', dirtyFields)
-
-  
-
+  const onError = () => {
+    console.log("########", errors)
+    console.log("@@@@@@@@@", isSubmitted)
+  }
 
   const renderInputs = () => {
     return fields.map((field, index) => {
@@ -70,36 +83,30 @@ const Report = () => {
           // Get the options based on the name
           const {optionName, optionKeys = {name: "name", value: "value"}} = field.optionsKey
           return (
-            <>
-              <Select
-                key={field.name}
-                {...field}
-                register={register}
-                label={field.label[language]}
-                name={field.name}
-                options={options[optionName]}
-                optionKeys={optionKeys}
-                errors={errors[field.name]}
-                validators={field.validators[language]}
-              >
-              </Select>
-          </>
+            <Select
+              key={index+field.name}
+              {...field}
+              register={register}
+              label={field.label[language]}
+              name={field.name}
+              options={options[optionName]}
+              optionKeys={optionKeys}
+              errors={errors[field.name]}
+              validators={field.validators[language]}
+            ></Select>
           )
       
         default:
           return (
-            <>
-              <Input
-                key={field.name}
-                {...field}
-                register={register}
-                label = {field.label[language]}
-                name={field.name}
-                errors={errors[field.name]}
-                validators={field.validators[language]}
-              ></Input>
-              
-            </>
+            <Input
+              key={index+field.name}
+              {...field}
+              register={register}
+              label = {field.label[language]}
+              name={field.name}
+              errors={errors[field.name]}
+              validators={field.validators[language]}
+            ></Input>
           )
       }
     }) 
@@ -107,22 +114,22 @@ const Report = () => {
   
   return (
     <>
-      {isSubmitted ? (
+      {/* {isSubmitted ? (
         <div className="text-lightgray font-semibold text-xl text-center flex flex-col">
           <p className="mb-4"> Successfully submitted. Thank you for your contribution! </p>
           <Link className="text-primary mb-2 hover:text-opacity-75" href="/analytics">View statistics</Link>
-          <Link className="text-primary hover:text-opacity-75" href="/">Back</Link>
+          <Link className="text-primary hover:text-opacity-75" href="/report">Back</Link>
         </div>
-      ) : (
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+      ) : ( */}
+        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, onError)}>
           {renderInputs()}
           <input
             className="submit-btn"
             disabled={isSubmitting}
             type="submit" />
         </form>
-        )
-      }
+        {/* )
+      } */}
     </>
   )
 }

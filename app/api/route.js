@@ -1,3 +1,4 @@
+import axios from "axios"
 import { NextResponse } from "next/server"
 import { options } from "../constants"
 
@@ -22,3 +23,14 @@ import { options } from "../constants"
 //     return NextResponse.json({ options })
 //   })
 // }
+
+export const getOptions = (url) => {
+  axios.get(url)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(errors => {
+      console.log(errors)
+    })
+}
