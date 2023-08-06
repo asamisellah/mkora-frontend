@@ -1,0 +1,155 @@
+version: 2.1
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:20.5.0
+    working_directory: ~/circleci-mkora-web
+
+  docker-executor:
+    docker:
+      - image: docker:17.05.0-ce-git
+    working_directory: ~/circleci-mkora-web
+
+  azure-executor:
+    docker:
+      - image: cimg/azure:2023.08.1
+    environment:
+    working_directory: ~/circleci-mkora-web
+
+jobs:
+  dependencies:
+    executor: node-executor
+    working_directory: ~/mkora-web
+
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Install dependencies
+          command: yarn install
+
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  build:
+    executor: node-executor
+
+    steps:
+      - setup_remote_docker
+
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Create optimised production build
+          command: yarn run build
+
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  build_docker_image:
+    executor: node-executor
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t $AZURE_ACR_HOST/mkora-web:$CIRCLE_SHA1 .
+      - run:
+          name: Save application Docker image
+          command: |
+            docker save -o mkora-web-image.tar $AZURE_ACR_HOST/mkora-web:$CIRCLE_SHA1
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  push_latest:
+    executor: node-executor
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Load application Docker image
+          command: |
+            docker load --input mkora-web-image.tar
+
+      - run:
+          name: Tag & Push Latest Image to ACR Repository
+          command: |
+            docker login -u $AZURE_ACR_USERNAME -p $AZURE_ACR_PASSWORD $AZURE_ACR_HOST
+            docker push $AZURE_ACR_HOST/mkora-web:$CIRCLE_SHA1
+
+  deploy_sandbox:
+    executor: azure-executor
+
+    steps:
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Login to Azure
+          command: |
+            az login --service-principal -u $AZURE_USER -p $AZURE_PASSWORD --tenant $AZURE_TENANT
+
+      - run:
+          name: Restart Azure Web Service
+          command: |
+            az webapp config container set --docker-custom-image-name $AZURE_ACR_HOST/mkora-web:$CIRCLE_SHA1 --docker-registry-server-password $AZURE_ACR_PASSWORD --docker-registry-server-url $AZURE_ACR_HOST --docker-registry-server-user $AZURE_ACR_USERNAME --name $AZURE_APP_NAME --resource-group $AZURE_RESOURCE_GROUP
+            az webapp config appsettings set --name $AZURE_APP_NAME --resource-group  $AZURE_RESOURCE_GROUP --settings WEBSITES_PORT=$AZURE_WEBSITES_PORT
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - dependencies
+
+      - build:
+          requires:
+            - dependencies
+
+      - build_docker_image:
+          context: mkora
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - main
+                - chore/ci-cd
+          requires:
+            - build
+
+      - push_latest:
+          context: mkora
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - main
+                - chore/ci-cd
+          requires:
+            - build_docker_image
+
+      - deploy_sandbox:
+          context: mkora
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - main
+                - chore/ci-cd
+          requires:
+            - build_docker_image
+            - push_latest
