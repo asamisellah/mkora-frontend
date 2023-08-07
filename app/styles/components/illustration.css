@@ -1,0 +1,27 @@
+.bg-div{
+ position: relative;
+ margin: auto
+}
+.img-div {
+  position: absolute;
+  top: 4%;
+  right: 35%;
+  width: 40%;
+}
+
+.illustration-bg-img{
+  width: 90%;
+  margin: auto;
+}
+
+.illustration-img {
+  width: 100%;
+}
+
+/* 
+@media (max-width: 767px) {
+  .illustration-img {
+      
+    }
+
+} */

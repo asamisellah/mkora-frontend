@@ -23,7 +23,7 @@ const ReportLayout = ({ children }) => {
       </nav>
 
       <article className="header">
-        <Brand></Brand>
+        <Brand direction="col"></Brand>
         <div className="my-11"></div>
         <Header></Header>
       </article>

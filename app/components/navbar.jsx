@@ -31,9 +31,9 @@ export default function Navbar({ navLinks, children }) {
   return (
     <>
       <nav className="flex flex-row justify-between items-center">
-        <div className="flex flex-row justify-start w-1/2">{children}</div>
+        <div className="flex flex-row justify-start md:w-1/2">{children}</div>
 
-        <div id="main-menu" className={`sm:hidden md:flex flex-row justify-end w-1/2`}>
+        <div id="main-menu" className={`md:flex flex-row justify-end md:w-1/2`}>
           {navLinks.map(link => {
             return (
               <Link
@@ -46,7 +46,7 @@ export default function Navbar({ navLinks, children }) {
           })}
         </div>
 
-        <div id='mobile-menu' className="md:hidden">
+        <div id='mobile-menu' className="w-1/8">
           <button
             onClick={() => setMenuOpen(!menuOpen)}>
             <MenuRoundedIcon color="secondary" fontSize="large"></MenuRoundedIcon>

@@ -1,7 +1,15 @@
+#mobile-menu{
+  display: none;
+}
+
 @media (max-width: 767px) {
 
   #main-menu {
     display: none;
+  }
+
+  #mobile-menu {
+    display: flex;
   }
     
 }

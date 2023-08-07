@@ -25,9 +25,6 @@
 }
 
 @media (max-width: 767px) {
-  body {
-    margin: 1rem;
-  }
 
   .report {
     grid-template-columns: 1fr;
