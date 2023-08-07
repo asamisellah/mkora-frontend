@@ -24,9 +24,12 @@ body {
     @apply transition ease-in-out delay-75 bg-primary text-lightgray font-bold md:w-4/12 py-2.5 px-8 
     mt-5 rounded-xl disabled:bg-darkgray hover:bg-opacity-75 hover:duration-300
   }
+  .p-text{
+    @apply mt-5 m-auto sm:w-3/4 lg:w-1/2 font-medium tracking-wide
+  }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
   body {
     margin: 1rem 1.5rem;
