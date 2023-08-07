@@ -10,7 +10,7 @@ const Illustration = () => (
         height="100"
         className="illustration-bg-img"
       ></Image>
-    <div className="img-div">
+    <div className="img-div rotate-scale-down">
       <Image
         src="/thanks.svg"
         alt="Thank you!"
