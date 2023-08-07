@@ -5,7 +5,7 @@ import styles from "../styles/components/brand.css"
 
 export default function Brand() {
   return (
-    <div className='flex md:flex-col sm:flex-row md:items-center'>
+    <div className='flex flex-col items-center'>
       <Image
         src="/mkora.svg"
         alt="mkora-logo"

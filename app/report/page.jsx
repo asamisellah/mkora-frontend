@@ -1,8 +1,7 @@
 'use client'
 
-import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useForm, ErrorMessage } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import Input from "../components/input"
 import Select from "../components/select"
 import { fields } from "../constants"
@@ -14,7 +13,8 @@ const Report = () => {
   const [options, setOptions] = useState({})
   const router = useRouter()
 
-  const { register, handleSubmit, formState: { errors, isSubmitting, isSubmitted }, } = useForm()
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting }, } = useForm()
+  const language = 'swahili'
 
   useEffect(() => {
     const fetchOptions = async () => {
