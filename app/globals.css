@@ -25,3 +25,11 @@ body {
     mt-5 rounded-xl disabled:bg-darkgray hover:bg-opacity-75 hover:duration-300
   }
 }
+
+@media (max-width: 767px) {
+
+  body {
+    margin: 1rem 1.5rem;
+  }
+
+}
