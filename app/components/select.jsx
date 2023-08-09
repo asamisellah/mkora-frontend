@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { LanguageContext } from "../LanguageProvider"
+import { LanguageContext } from "../providers/LanguageProvider"
 
 export default function Select({ label, name, validators, options = [], register, optionKeys, errors }) {
   const { language } = useContext(LanguageContext)

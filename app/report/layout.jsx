@@ -6,7 +6,7 @@ import { navLinks } from "../constants"
 import styles from "../styles/report/styles.css"
 import Brand from "../components/brand";
 import Header from "../components/header";
-import LanguageProvider from "../LanguageProvider";
+import LanguageProvider from "../providers/LanguageProvider";
 
 const ReportLayout = ({ children }) => {
 

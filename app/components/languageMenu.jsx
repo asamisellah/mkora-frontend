@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { languages } from "../constants";
-import { LanguageContext } from "../LanguageProvider";
+import { LanguageContext } from "../providers/LanguageProvider";
 
 export default function LanguageMenu() {
   const { language, setLanguage } = useContext(LanguageContext)

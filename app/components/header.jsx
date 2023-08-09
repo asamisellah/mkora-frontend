@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { content } from "../constants";
-import { LanguageContext } from "../LanguageProvider";
+import { LanguageContext } from "../providers/LanguageProvider";
 
 export default function Header() {
   const {language} = useContext(LanguageContext)

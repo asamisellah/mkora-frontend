@@ -7,7 +7,7 @@ import Select from "../components/select"
 import { fields } from "../constants"
 import { getOptions, postReport } from "../api/route"
 import { useRouter } from "next/navigation"
-import { LanguageContext } from "../LanguageProvider"
+import { LanguageContext } from "../providers/LanguageProvider"
 
 
 const Report = () => {
