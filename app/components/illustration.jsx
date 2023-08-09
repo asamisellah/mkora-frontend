@@ -4,7 +4,7 @@ import styles from "../styles/components/illustration.css"
 const Illustration = () => (
   <div className='bg-div'>
       <Image
-        src="/thanks-bg.svg"
+        src="/thanks-bg-brown.svg"
         alt="Thank you!"
         width="100"
         height="100"
@@ -12,7 +12,7 @@ const Illustration = () => (
       ></Image>
     <div className="img-div rotate-scale-down">
       <Image
-        src="/thanks.svg"
+        src="/thanks-brown.svg"
         alt="Thank you!"
         width="100"
         height="100"
