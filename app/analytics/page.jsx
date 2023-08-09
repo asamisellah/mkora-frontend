@@ -16,7 +16,7 @@ const Analytics = () => {
   }, [setCurrDomain])
   
   return (
-    <div className="flex flex-col gap-8 items-center mt-7">
+    <div className="flex flex-col gap-8 items-center">
       <Illustration></Illustration>
 
       <article className="text-lightgray sm:w-full md:w-3/4 text-center gap-3 flex flex-col items-center ">
