@@ -15,7 +15,6 @@ const Analytics = () => {
     setCurrDomain(window.location.origin)
   }, [setCurrDomain])
   
-  console.log(currDomain)
   return (
     <div className="flex flex-col gap-8 items-center mt-7">
       <Illustration></Illustration>

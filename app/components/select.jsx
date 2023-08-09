@@ -1,17 +1,21 @@
+import { useContext } from "react"
+import { LanguageContext } from "../LanguageProvider"
+
 export default function Select({ label, name, validators, options = [], register, optionKeys, errors }) {
+  const { language } = useContext(LanguageContext)
   
   return (
     <section className="field">
       <label className="label">{ label }</label>
       
       <select className="input" {...register(name, { ...validators })}>
-        <option value="">Select...</option>
+        <option value="">{ language === 'swahili' ? 'Chagua...' : 'Select...'}</option>
         {options.length && options.map(option => {
           return (
             <option
               key={option[optionKeys.value]}
               value={option[optionKeys.value]}>
-              {option[optionKeys.name]["english"] ? option[optionKeys.name]["english"] : option[optionKeys.name]}
+              {option[optionKeys.name][language] ? option[optionKeys.name][language] : option[optionKeys.name]}
             </option>
           )}
         )}
