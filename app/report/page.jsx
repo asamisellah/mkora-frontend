@@ -13,6 +13,7 @@ import { LanguageContext } from "../LanguageProvider"
 const Report = () => {
   const { language } = useContext(LanguageContext)
   const [options, setOptions] = useState({})
+  const [isSubmitFailed, setIsSubmitFailed] = useState(false)
   const router = useRouter()
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitted }, } = useForm()
@@ -35,6 +36,7 @@ const Report = () => {
         router.push('/analytics')
         break
       default:
+        setIsSubmitFailed(true)
         break
       
     }
@@ -82,6 +84,7 @@ const Report = () => {
   
   return (
     <>
+      {isSubmitFailed && <p className="text-primary">Unable to send your report at the moment. Please try again.</p>}
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, onError)}>
         {renderInputs()}
         {isSubmitting ? (<div className="submit-btn">sending...</div>)
