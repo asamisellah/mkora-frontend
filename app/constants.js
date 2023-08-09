@@ -19,12 +19,12 @@ export const fields = [
     validators: { swahili: { required: "Chagua county" }, english: { required: "Select a county" } }
   },
   {
-    name: "incidentDate", label: { english: "When did it happen?", swahili: "Ilihappen when?" }, type: "date",
+    name: "incidentDate", label: { english: "When did it happen?", swahili: "Ilihappen when?" }, type: "date", max: new Date().toJSON().slice(0, 10),
     validators: { swahili: { required: "Chagua siku" }, english: { required: "Select a date" } }
   },
   {
     name: "itWorked", label: { english: "Did it work?", swahili: "Iliweza ama haiku weza?" }, type: "select", optionsKey: { optionName: "itWorked" },
-    validators: { swahili: { required: "Chagua moja" }, english: { required: "Select option" } }
+    validators: { swahili: { required: "Chagua kama iliweza au zi" }, english: { required: "Select option" } }
   }
 ]
 
@@ -45,8 +45,16 @@ export const options = {
   ],
   itWorked: [
     { value: true, name: { swahili: "Iliweza", english: "Yes" } },
-    { value: false, name: { english: "No", swahili: "haikuweza" } }
+    { value: false, name: { english: "No", swahili: "zi" } }
   ]
+}
+
+export const content = {
+  header: "The anti-virus for corruption",
+  tagLine: {
+    swahili: "Washtaki ndio tukule mabaki.",
+    english: "Help fight corruption by filling out the form."
+  }
 }
 
 // Make an enum

@@ -4,7 +4,6 @@ import { options } from "../constants"
 export const getOptions = async () => {
   return await axios.get('https://mkora-service.azurewebsites.net/api/v1/options')
     .then(res => {
-      console.log(res.data)
 
       const data = {
         ...options,

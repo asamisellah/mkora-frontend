@@ -1,6 +1,7 @@
 .report {
   background-color: #000 !important;
   display: grid;
+  grid-column-gap: 1rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 90vh;
   grid-template-areas:
@@ -37,6 +38,7 @@
 
   .main{
     width: 80%;
+    max-height: 100%;
   }
 }
 

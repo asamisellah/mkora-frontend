@@ -1,25 +1,26 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import Input from "../components/input"
 import Select from "../components/select"
 import { fields } from "../constants"
 import { getOptions, postReport } from "../api/route"
 import { useRouter } from "next/navigation"
+import { LanguageContext } from "../LanguageProvider"
 
 
 const Report = () => {
+  const { language } = useContext(LanguageContext)
   const [options, setOptions] = useState({})
+  const [isSubmitFailed, setIsSubmitFailed] = useState(false)
   const router = useRouter()
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting }, } = useForm()
-  const language = 'swahili'
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitted }, } = useForm()
 
   useEffect(() => {
     const fetchOptions = async () => {
       const options = await getOptions()
-      console.log("Options", options)
       setOptions(options)
     }
     fetchOptions()
@@ -28,13 +29,14 @@ const Report = () => {
 
 
 
-  const onSubmit = async (data) => {    
+  const onSubmit = async (data) => { 
     const response = await postReport(data)
     switch (response) {
       case 'Success':
         router.push('/analytics')
         break
       default:
+        setIsSubmitFailed(true)
         break
       
     }
@@ -73,6 +75,7 @@ const Report = () => {
               name={field.name}
               errors={errors[field.name]}
               validators={field.validators[language]}
+              max={field.max}
             ></Input>
           )
       }
@@ -81,13 +84,14 @@ const Report = () => {
   
   return (
     <>
+      {isSubmitFailed && <p className="text-primary">Unable to send your report at the moment. Please try again.</p>}
       <form className="flex flex-col" onSubmit={handleSubmit(onSubmit, onError)}>
         {renderInputs()}
         {isSubmitting ? (<div className="submit-btn">sending...</div>)
           : (
             <input
-              className="submit-btn"
-              value="Report"
+              className={`submit-btn ${isSubmitted? "disabled": ""}`}
+              value={language === 'swahili'? 'Ripoti':'Report'}
               type="submit" />
           )}
       </form>

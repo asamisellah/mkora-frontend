@@ -7,7 +7,7 @@ const AnalyticsLayout = ({children}) => (
   <Navbar navLinks={navLinks}>
       <Brand></Brand>
   </Navbar>
-  <article>{ children }</article>
+  <article className="my-7">{ children }</article>
   </>
 )
 

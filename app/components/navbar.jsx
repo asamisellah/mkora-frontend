@@ -5,10 +5,11 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import styles from "../styles/components/navbar.css"
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import { CloseRounded } from "@mui/icons-material";
 
 
 export default function Navbar({ navLinks, children }) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const currentPath = usePathname()
   const isActive = (link) => {
@@ -16,16 +17,23 @@ export default function Navbar({ navLinks, children }) {
   }
 
   const getMobileMenu = () => {
-    navLinks.map((link, index) => (
-      <li key={link.name}>
-        <Link
-          className={`text-4xl ml-4 p-4 text-secondary  ${isActive(link) ? "underline underline-offset-8 decoration-primary font-medium": "font-normal"}`}
-          href={link.href}
-          key={index+link.name}>
-          {link.name}
-        </Link>
-      </li>
-    ))
+    return (
+      <div className="mobile-nav flex flex-col gap-5"> 
+        <button className="self-end px-5" onClick={() => setIsMenuOpen(false)}>
+          <CloseRounded className="text-secondary" fontSize="large"></CloseRounded>
+        </button> 
+        {navLinks.map((link, index) => (
+          <div className="mb-5" key={link.name}>
+            <Link
+              className={`text-4xl ml-4 p-4 text-secondary  ${isActive(link) ? "underline underline-offset-8 decoration-primary font-medium": "font-normal"}`}
+              href={link.href}
+              key={index+link.name}>
+              {link.name}
+            </Link>
+          </div>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -48,12 +56,10 @@ export default function Navbar({ navLinks, children }) {
 
         <div id='mobile-menu' className="w-1/8">
           <button
-            onClick={() => setMenuOpen(!menuOpen)}>
-            <MenuRoundedIcon color="secondary" fontSize="large"></MenuRoundedIcon>
+            onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <MenuRoundedIcon className="text-primary" fontSize="large"></MenuRoundedIcon>
           </button>
-          <ul>
-            {menuOpen && getMobileMenu()}
-          </ul>
+          {isMenuOpen && getMobileMenu()}
         </div>
       </nav> 
     </>
