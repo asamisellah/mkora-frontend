@@ -2,7 +2,7 @@ import axios from "axios"
 import { options } from "../constants"
 
 export const getOptions = async () => {
-  return await axios.get('https://mkora-service.azurewebsites.net/api/v1/options')
+  return await axios.get('https://api.mkora.org/api/v1/options')
     .then(res => {
 
       const data = {
@@ -17,7 +17,7 @@ export const getOptions = async () => {
 }
 
 export const postReport = async (payload) => {
-  return await axios.post('https://mkora-service.azurewebsites.net/api/v1/report', JSON.stringify(payload), {
+  return await axios.post('https://api.mkora.org/api/v1/report', JSON.stringify(payload), {
     headers: {
       "Content-Type": "application/json"
     }
