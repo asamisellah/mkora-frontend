@@ -9,8 +9,8 @@ export default function Brand({direction = "row"}) {
       { direction == "col" ? (
         <Link href="/" className='flex flex-col items-center'>
           <Image
-            src="/mkora.svg"
             alt="mkora-logo"
+            src="https://mkora.blob.core.windows.net/mkora/mkora.svg"
             width="100"
             height="100"
             className="slide-fwd-center md:scale-125"
@@ -21,7 +21,7 @@ export default function Brand({direction = "row"}) {
       ) : (
           <Link href="/" className='flex flex-row items-center'>
             <Image
-              src="/mkora.svg"
+              src="https://mkora.blob.core.windows.net/mkora/mkora.svg"
               alt="mkora-logo"
               width="100"
               height="100"
