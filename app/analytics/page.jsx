@@ -19,10 +19,10 @@ const Analytics = () => {
                 frameBorder="200"
                 width="100%" height="800px" allowTransparency>
         </iframe>
-      <Illustration/>
+      {/*<Illustration/>*/}
 
       <article className="text-lightgray sm:w-full md:w-3/4 text-center gap-3 flex flex-col items-center ">
-        <h2 className="font-semibold sm:w-3/4 lg:w-1/2 text-5xl">Thanks For Your Support!</h2>
+        {/*<h2 className="font-semibold sm:w-3/4 lg:w-1/2 text-5xl">Thanks For Your Support!</h2>*/}
         
         <RWebShare
           data={{
