@@ -6,8 +6,6 @@ import styles from "../styles/analytics/styles.css"
 import { RWebShare } from 'react-web-share'
 import { useEffect, useState } from 'react';
 
-
-
 const Analytics = () => {
   const [currDomain, setCurrDomain] = useState()
   
@@ -17,7 +15,11 @@ const Analytics = () => {
   
   return (
     <div className="flex flex-col gap-8 items-center">
-      <Illustration></Illustration>
+        <iframe className="metabase-dashboard" src="https://mkora.metabaseapp.com/public/dashboard/05a7aee3-6842-4dd0-9f08-25b83bfc2eb8"
+                frameBorder="200"
+                width="100%" height="800px" allowTransparency>
+        </iframe>
+      <Illustration/>
 
       <article className="text-lightgray sm:w-full md:w-3/4 text-center gap-3 flex flex-col items-center ">
         <h2 className="font-semibold sm:w-3/4 lg:w-1/2 text-5xl">Thanks For Your Support!</h2>
